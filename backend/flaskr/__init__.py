@@ -8,10 +8,24 @@ from models import *
 
 
 def create_app(test_config=None):
-  # create and configure the app
-  app = Flask(__name__)
-  setup_db(app)
-  CORS(app)
+    # create and configure the app
+    app = Flask(__name__)
+    setup_db(app)
+    CORS(app)
+
+    #TODO: Define endpoints to:
+
+    # GET /actors and /movies
+    @app.route('/actors', methods=['GET'])
+    def function():
+      actors = Actors.query.all()
+      
+      return jsonify{(...)}
+
+    # DELETE / actors / and / movies/
+    # POST / actors and / movies and
+    # PATCH / actors / and / movies/
+
 
   ''' @app.route('/endpoint', methods=['GET'])
       def function():
