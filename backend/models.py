@@ -36,6 +36,32 @@ class Actors(db.Model):
     age = Column(Integer, nullable=False)
     gender = Column(String(180), nullable=False)
 
+    '''delete()
+    deletes a new model into a database
+    the model must exist in the database
+    '''
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+    
+    '''
+    insert()
+        inserts a new model into a database
+        the model must have a unique name
+        the model must have a unique id or null id
+    '''
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
+
+    '''
+    update()
+        updates a new model into a database
+        the model must exist in the database
+    '''
+    def update(self):
+        db.session.commit()
+
 
 '''
 Movies
@@ -50,4 +76,33 @@ class Movies(db.Model):
     id = Column(Integer, primary_key=True)
     title = Column(String(180), nullable=False)
     release_date = Column(database.DateTime, nullable=False)
+
+    '''delete()
+    deletes a new model into a database
+    the model must exist in the database
+    '''
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    '''
+    insert()
+        inserts a new model into a database
+        the model must have a unique name
+        the model must have a unique id or null id
+    '''
+
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
+
+    '''
+    update()
+        updates a new model into a database
+        the model must exist in the database
+    '''
+
+    def update(self):
+        db.session.commit()
     
