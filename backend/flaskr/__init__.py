@@ -13,16 +13,44 @@ def create_app(test_config=None):
     setup_db(app)
     CORS(app)
 
-    #TODO: Define endpoints to:
-
-    # GET /actors and /movies
+    # GET /actors and /movies --> DONE
     @app.route('/actors', methods=['GET'])
-    def function():
+    def get_actors():
       actors = Actors.query.all()
-      
-      return jsonify{(...)}
+      if not actors:
+        abort(404)
+      return jsonify({"success":True,"Actors":actors})
+
+    @app.route('/movies', methods=['GET'])
+    def get_movies():
+      movies = Movies.query.all()
+      if not movies:
+        abort(404)
+      return jsonify({"success": True, "Movies": movies})
 
     # DELETE / actors / and / movies/
+    @app.route('/actors/<int:id>', methods=['DELETE'])
+    def delete_actor(id):
+      actor = Actors.query.get(id)
+      if not actor:
+        abort(404)
+      try:
+        actor.delete()
+      except Exception:
+        abort(401)
+      return jsonify({"success": True, "Deleted": actor})
+
+    @app.route('/movies/<int:id>', methods=['DELETE'])
+    def delete_movie(id):
+      movie = Movies.query.get(id)
+      if not movie:
+        abort(404)
+      try:
+        movie.delete()
+      except Exception:
+        abort(401)
+      return jsonify({"success": True, "Deleted": movie})
+  
     # POST / actors and / movies and
     # PATCH / actors / and / movies/
 
