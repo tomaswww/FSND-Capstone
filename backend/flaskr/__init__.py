@@ -52,14 +52,58 @@ def create_app(test_config=None):
       return jsonify({"success": True, "Deleted": movie})
   
     # POST / actors and / movies and
+    @app.route('/actors', methods=['POST'])
+    def post_actor():
+      data = request.get_json()
+      if not data:
+        abort(400)
+      
+      new_name = data.get("name")
+      new_age = data.get("age")
+      new_gender = data.get("gender")
+
+      if not new_name or not new_age or not new_gender:
+        abort(400)
+      
+      # Create a new actor
+      new_actor = Actors(name=new_name,age=new_age,gender=new_gender)
+      try:
+        new_actor.insert()
+      except Exception:
+        abort(401)
+      
+      # Query for new actor
+      new_actor_id = new_actor.id
+      new_actors = Actors.query.get(new_actor_id)
+      return jsonify({"success": True, "Deleted": new_actors})
+
+    @app.route('/moviess', methods=['POST'])
+    def post_movie():
+      data = request.get_json()
+      if not data:
+        abort(400)
+
+      new_title = data.get("title")
+      new_release_date = data.get("release_date")
+
+      if not new_title or not new_release_date:
+        abort(400)
+
+      # Create a new movie
+      new_movie = Movies(title=new_title, release_date=new_release_date)
+      try:
+        new_movie.insert()
+      except Exception:
+        abort(401)
+
+      # Query for new actor
+      new_movie_id = new_movie.id
+      new_movies = Movies.query.get(new_movie_id)
+      return jsonify({"success": True, "Deleted": new_movies})
+      
     # PATCH / actors / and / movies/
 
 
-  ''' @app.route('/endpoint', methods=['GET'])
-      def function():
-      ...
-      return jsonify{(...)}
-  '''
 
   return app
 
