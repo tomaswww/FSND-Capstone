@@ -19,41 +19,55 @@ def create_app(test_config=None):
     # GET /actors and /movies --> DONE
     @app.route('/actors', methods=['GET'])
     def get_actors():
-        result = actors.query.all()
-        print(result)
-        if not result:
+        all_actors = actors.query.all()
+        results = []
+        one_actor = {}
+        for actor in all_actors:
+          one_actor["id"] = actor.id
+          one_actor["name"] = actor.name
+          one_actor["age"] = actor.age
+          one_actor["gender"] = actor.gender
+          results.append(one_actor)
+        if not results:
           abort(404)
-        return jsonify({"success":True,"Actors":result})
+        return jsonify({"success":True,"Actors":results})
 
     @app.route('/movies', methods=['GET'])
     def get_movies():
-        movies = Movies.query.all()
-        if not movies:
+        all_movies = movies.query.all()
+        results = []
+        one_movie = {}
+        for movie in all_movies:
+          one_movie["id"] = movie.id
+          one_movie["title"] = movie.title
+          one_movie["release_date"] = movie.release_date
+          results.append(one_movie)
+        if not results:
           abort(404)
-        return jsonify({"success": True, "Movies": movies})
+        return jsonify({"success": True, "Movies":results})
 
     # DELETE / actors / and / movies/
     @app.route('/actors/<int:id>', methods=['DELETE'])
     def delete_actor(id):
-        actor = Actors.query.get(id)
+        actor = actors.query.get(id)
         if not actor:
           abort(404)
         try:
           actor.delete()
         except Exception:
           abort(401)
-        return jsonify({"success": True, "Deleted": actor})
+        return jsonify({"success": True, "Deleted": id})
 
     @app.route('/movies/<int:id>', methods=['DELETE'])
     def delete_movie(id):
-        movie = Movies.query.get(id)
+        movie = movies.query.get(id)
         if not movie:
           abort(404)
         try:
           movie.delete()
         except Exception:
           abort(401)
-        return jsonify({"success": True, "Deleted": movie})
+        return jsonify({"success": True, "Deleted": id})
   
     # POST / actors and / movies and
     @app.route('/actors', methods=['POST'])
@@ -70,7 +84,7 @@ def create_app(test_config=None):
           abort(400)
         
         # Create a new actor
-        new_actor = Actors(name=new_name,age=new_age,gender=new_gender)
+        new_actor = actors(name=new_name,age=new_age,gender=new_gender)
         try:
           new_actor.insert()
         except Exception:
@@ -78,10 +92,16 @@ def create_app(test_config=None):
         
         # Query for new actor
         new_actor_id = new_actor.id
-        new_actors = Actors.query.get(new_actor_id)
-        return jsonify({"success": True, "Deleted": new_actors})
+        new_actors = actors.query.get(new_actor_id)
+        one_actor = {}
+        one_actor["id"] = new_actors.id
+        one_actor["name"] = new_actors.name
+        one_actor["age"] = new_actors.age
+        one_actor["gender"] = new_actors.gender
 
-    @app.route('/moviess', methods=['POST'])
+        return jsonify({"success": True, "Deleted": one_actor})
+
+    @app.route('/movies', methods=['POST'])
     def post_movie():
         data = request.get_json()
         if not data:
@@ -91,15 +111,19 @@ def create_app(test_config=None):
         if not new_title or not new_release_date:
           abort(400)
         # Create a new movie
-        new_movie = Movies(title=new_title, release_date=new_release_date)
+        new_movie = movies(title=new_title, release_date=new_release_date)
         try:
           new_movie.insert()
         except Exception:
           abort(401)
         # Query for new actor
         new_movie_id = new_movie.id
-        new_movies = Movies.query.get(new_movie_id)
-        return jsonify({"success": True, "Deleted": new_movies})
+        new_movies = movies.query.get(new_movie_id)
+        one_movie = {}
+        one_movie["id"] = new_movies.id
+        one_movie["title"] = new_movies.title
+        one_movie["release_date"] = new_movies.release_date
+        return jsonify({"success": True, "Movie": one_movie})
 
     # PATCH / actors / and / movies/
     @app.route('/actors/<int:id>', methods=['PATCH'])
