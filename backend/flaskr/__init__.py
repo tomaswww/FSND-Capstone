@@ -18,6 +18,7 @@ def create_app(test_config=None):
 
     # GET /actors and /movies --> DONE
     @app.route('/actors', methods=['GET'])
+    @requires_auth('get:actors')
     def get_actors():
         all_actors = actors.query.all()
         results = []
@@ -33,6 +34,7 @@ def create_app(test_config=None):
         return jsonify({"success":True,"Actors":results})
 
     @app.route('/movies', methods=['GET'])
+    @requires_auth('get:movies')
     def get_movies():
         all_movies = movies.query.all()
         results = []
@@ -48,6 +50,7 @@ def create_app(test_config=None):
 
     # DELETE / actors / and / movies/
     @app.route('/actors/<int:id>', methods=['DELETE'])
+    @requires_auth('delete:actors')
     def delete_actor(id):
         actor = actors.query.get(id)
         if not actor:
@@ -59,6 +62,7 @@ def create_app(test_config=None):
         return jsonify({"success": True, "Deleted": id})
 
     @app.route('/movies/<int:id>', methods=['DELETE'])
+    @requires_auth('delete:movies')
     def delete_movie(id):
         movie = movies.query.get(id)
         if not movie:
@@ -71,6 +75,7 @@ def create_app(test_config=None):
   
     # POST / actors and / movies and
     @app.route('/actors', methods=['POST'])
+    @requires_auth('add:actors')
     def post_actor():
         data = request.get_json()
         if not data:
@@ -102,6 +107,7 @@ def create_app(test_config=None):
         return jsonify({"success": True, "Deleted": one_actor})
 
     @app.route('/movies', methods=['POST'])
+    @requires_auth('add:movies')
     def post_movie():
         data = request.get_json()
         if not data:
@@ -127,6 +133,7 @@ def create_app(test_config=None):
 
     # PATCH / actors / and / movies/
     @app.route('/actors/<int:id>', methods=['PATCH'])
+    @requires_auth('change:actors')
     def patch_actor(id):
         # Get actor to patch
         new_actor = actors.query.get(id)
@@ -153,6 +160,7 @@ def create_app(test_config=None):
         return jsonify({"success":True,"Actor":one_actor})
     
     @app.route('/movies/<int:id>', methods=['PATCH'])
+    @requires_auth('change:movies')
     def patch_movie(id):
         # Get actor to patch
         new_movie = movies.query.get(id)
