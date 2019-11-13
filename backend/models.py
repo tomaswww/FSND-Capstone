@@ -1,9 +1,11 @@
 import os
 from sqlalchemy import Column, String, Integer, create_engine
-from flask_sqlalchemy import SQLAlchemy, database,DateTime
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 import json
+from datetime import datetime
 
-# database_name = "trivia"
+# database_name = "casting"
 database_path = 'postgresql://tomaswingord:tomasw87@localhost:5432/casting'
 
 db = SQLAlchemy()
@@ -20,21 +22,26 @@ def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
-    db.create_all()
+    # db.create_all()
 
 
 '''
 Actors
 
 '''
-class Actors(db.Model):
+class actors(db.Model):
     
-    __tablename__ = 'Actors'
+    __tablename__ = 'actors'
 
     id = Column(Integer, primary_key=True)
     name = Column(String(180), nullable=False)
     age = Column(Integer, nullable=False)
     gender = Column(String(180), nullable=False)
+
+    def __init__(self, name, age, gender):
+        self.name = name
+        self.age = age
+        self.gender = gender
 
     '''delete()
     deletes a new model into a database
@@ -69,13 +76,18 @@ Movies
 '''
 
 
-class Movies(db.Model):
+class movies(db.Model):
 
-    __tablename__ = 'Movies'
+    __tablename__ = 'movies'
 
     id = Column(Integer, primary_key=True)
     title = Column(String(180), nullable=False)
-    release_date = Column(database.DateTime, nullable=False)
+    release_date = Column(db.DateTime, nullable=False)
+
+    def __init__(self, title, release_date):
+        self.title = title
+        self.release_date = release_date
+        
 
     '''delete()
     deletes a new model into a database
