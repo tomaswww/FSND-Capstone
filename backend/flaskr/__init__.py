@@ -19,8 +19,8 @@ def create_app(test_config=None):
 
     # GET /actors and /movies --> DONE
     @app.route('/actors', methods=['GET'])
-    @requires_auth('get:actors')
-    def get_actors():
+    @requires_auth(permission='read:actors')
+    def get_actors(payload):
         all_actors = actors.query.all()
         results = []
         one_actor = {}
@@ -35,8 +35,8 @@ def create_app(test_config=None):
         return jsonify({"success":True,"Actors":results})
 
     @app.route('/movies', methods=['GET'])
-    @requires_auth('get:movies')
-    def get_movies():
+    @requires_auth(permission='read:movies')
+    def get_movies(payload):
         all_movies = movies.query.all()
         results = []
         one_movie = {}
@@ -51,8 +51,8 @@ def create_app(test_config=None):
 
     # DELETE / actors / and / movies/
     @app.route('/actors/<int:id>', methods=['DELETE'])
-    @requires_auth('delete:actors')
-    def delete_actor(id):
+    @requires_auth(permission='delete:actors')
+    def delete_actor(payload,id):
         actor = actors.query.get(id)
         if not actor:
           abort(404)
@@ -63,8 +63,8 @@ def create_app(test_config=None):
         return jsonify({"success": True, "Deleted": id})
 
     @app.route('/movies/<int:id>', methods=['DELETE'])
-    @requires_auth('delete:movies')
-    def delete_movie(id):
+    @requires_auth(permission='delete:movies')
+    def delete_movie(payload,id):
         movie = movies.query.get(id)
         if not movie:
           abort(404)
@@ -76,8 +76,8 @@ def create_app(test_config=None):
   
     # POST / actors and / movies and
     @app.route('/actors', methods=['POST'])
-    @requires_auth('add:actors')
-    def post_actor():
+    @requires_auth(permission='add:actors')
+    def post_actor(payload):
         data = request.get_json()
         if not data:
           abort(400)
@@ -108,8 +108,8 @@ def create_app(test_config=None):
         return jsonify({"success": True, "Deleted": one_actor})
 
     @app.route('/movies', methods=['POST'])
-    @requires_auth('add:movies')
-    def post_movie():
+    @requires_auth(permission='add:movies')
+    def post_movie(payload):
         data = request.get_json()
         if not data:
           abort(400)
@@ -134,8 +134,8 @@ def create_app(test_config=None):
 
     # PATCH / actors / and / movies/
     @app.route('/actors/<int:id>', methods=['PATCH'])
-    @requires_auth('change:actors')
-    def patch_actor(id):
+    @requires_auth(permission='change:actors')
+    def patch_actor(payload,id):
         # Get actor to patch
         new_actor = actors.query.get(id)
         if not new_actor:
@@ -161,8 +161,8 @@ def create_app(test_config=None):
         return jsonify({"success":True,"Actor":one_actor})
     
     @app.route('/movies/<int:id>', methods=['PATCH'])
-    @requires_auth('change:movies')
-    def patch_movie(id):
+    @requires_auth(permission='change:movies')
+    def patch_movie(payload,id):
         # Get actor to patch
         new_movie = movies.query.get(id)
         if not new_movie:
