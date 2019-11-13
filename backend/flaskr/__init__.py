@@ -129,42 +129,51 @@ def create_app(test_config=None):
     @app.route('/actors/<int:id>', methods=['PATCH'])
     def patch_actor(id):
         # Get actor to patch
-        actor = Actors.query.get(id)
-        if not actor:
+        new_actor = actors.query.get(id)
+        if not new_actor:
           abort(404)
         # Check what values are available to patch
         data = request.get_json()
         if 'name' in data:
-          actor.name = data.get("name")
+          new_actor.name = data.get("name")
         if 'age' in data:
-          actor.age = data.get("age")
+          new_actor.age = data.get("age")
         if 'gender' in data:
-          actor.gender = data.get("gender")
+          new_actor.gender = data.get("gender")
         try:
-          actor.update()
+          new_actor.update()
         except Exception:
           abort(401)
-        patched_actor = Actors.query.get(actor.id)
-        return jsonify({"success":True,"Actor":patched_actor})
+        patched_actor = actors.query.get(new_actor.id)
+        one_actor = {}
+        one_actor["id"] = patched_actor.id
+        one_actor["name"] = patched_actor.name
+        one_actor["age"] = patched_actor.age
+        one_actor["gender"] = patched_actor.gender
+        return jsonify({"success":True,"Actor":one_actor})
     
     @app.route('/movies/<int:id>', methods=['PATCH'])
     def patch_movie(id):
         # Get actor to patch
-        movie = Movies.query.get(id)
-        if not movie:
+        new_movie = movies.query.get(id)
+        if not new_movie:
           abort(404)
         # Check what values are available to patch
         data = request.get_json()
         if 'title' in data:
-          movie.title = data.get("title")
+          new_movie.title = data.get("title")
         if 'release_date' in data:
-          movie.release_date = data.get("release_date")
+          new_movie.release_date = data.get("release_date")
         try:
-          movie.update()
+          new_movie.update()
         except Exception:
           abort(401)
-        patched_movie = Movies.query.get(movie.id)
-        return jsonify({"success": True, "Movie": patched_movie})
+        patched_movie = movies.query.get(new_movie.id)
+        one_movie = {}
+        one_movie["id"] = new_movie.id
+        one_movie["title"] = new_movie.title
+        one_movie["release_date"] = new_movie.release_date
+        return jsonify({"success": True, "Movie": one_movie})
 
     return app
 
