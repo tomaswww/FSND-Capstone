@@ -3,6 +3,8 @@ Final Project for the Udacity Fullstack Nanodegree
 
 ## Overview
 
+This project consists of a Casting Agency App.
+The Casting Agency models a company that is responsible for creating movies and managing and assigning actors to those movies. You are an Executive Producer within the company and are creating a system to simplify and streamline your process.
 
 ## Getting Started
 
@@ -53,3 +55,7 @@ Setting the `FLASK_APP` variable to `flaskr` directs flask to use the `flaskr` d
 
 ## Avaible Endpoints
 
+GET /actors and /movies
+DELETE /actors/ and /movies/
+POST /actors and /movies and
+PATCH /actors/ and /movies/
