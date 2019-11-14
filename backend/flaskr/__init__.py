@@ -23,8 +23,8 @@ def create_app(test_config=None):
     def get_actors(payload):
         all_actors = actors.query.all()
         results = []
-        one_actor = {}
         for actor in all_actors:
+          one_actor = {}
           one_actor["id"] = actor.id
           one_actor["name"] = actor.name
           one_actor["age"] = actor.age
@@ -39,8 +39,8 @@ def create_app(test_config=None):
     def get_movies(payload):
         all_movies = movies.query.all()
         results = []
-        one_movie = {}
         for movie in all_movies:
+          one_movie = {}
           one_movie["id"] = movie.id
           one_movie["title"] = movie.title
           one_movie["release_date"] = movie.release_date
@@ -51,7 +51,7 @@ def create_app(test_config=None):
 
     # DELETE / actors / and / movies/
     @app.route('/actors/<int:id>', methods=['DELETE'])
-    @requires_auth(permission='delete:actors')
+    @requires_auth(permission='delete:actor')
     def delete_actor(payload,id):
         actor = actors.query.get(id)
         if not actor:
@@ -63,7 +63,7 @@ def create_app(test_config=None):
         return jsonify({"success": True, "Deleted": id})
 
     @app.route('/movies/<int:id>', methods=['DELETE'])
-    @requires_auth(permission='delete:movies')
+    @requires_auth(permission='delete:movie')
     def delete_movie(payload,id):
         movie = movies.query.get(id)
         if not movie:
@@ -76,7 +76,7 @@ def create_app(test_config=None):
   
     # POST / actors and / movies and
     @app.route('/actors', methods=['POST'])
-    @requires_auth(permission='add:actors')
+    @requires_auth(permission='add:actor')
     def post_actor(payload):
         data = request.get_json()
         if not data:
@@ -105,10 +105,10 @@ def create_app(test_config=None):
         one_actor["age"] = new_actors.age
         one_actor["gender"] = new_actors.gender
 
-        return jsonify({"success": True, "Deleted": one_actor})
+        return jsonify({"success": True, "Actor": one_actor})
 
     @app.route('/movies', methods=['POST'])
-    @requires_auth(permission='add:movies')
+    @requires_auth(permission='add:movie')
     def post_movie(payload):
         data = request.get_json()
         if not data:
@@ -134,7 +134,7 @@ def create_app(test_config=None):
 
     # PATCH / actors / and / movies/
     @app.route('/actors/<int:id>', methods=['PATCH'])
-    @requires_auth(permission='change:actors')
+    @requires_auth(permission='change:actor')
     def patch_actor(payload,id):
         # Get actor to patch
         new_actor = actors.query.get(id)
@@ -161,7 +161,7 @@ def create_app(test_config=None):
         return jsonify({"success":True,"Actor":one_actor})
     
     @app.route('/movies/<int:id>', methods=['PATCH'])
-    @requires_auth(permission='change:movies')
+    @requires_auth(permission='change:movie')
     def patch_movie(payload,id):
         # Get actor to patch
         new_movie = movies.query.get(id)
