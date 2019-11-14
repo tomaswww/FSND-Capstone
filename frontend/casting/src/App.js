@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Profile from "./components/Profile";
 
+
 function App() {
   const { loading } = useAuth0();
 
@@ -22,7 +23,7 @@ function App() {
        
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Please login to View Casting information
+          This is the Casting App
         </p>
          < NavBar / >
       </header>
