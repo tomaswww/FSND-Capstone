@@ -37,6 +37,12 @@ function App() {
       <Switch>
           <Route path="/" exact />
           <Route path="/Profile" component={Profile} />
+          <Route path="/ViewArtists" component={ViewArtists} />
+          <Route path="/ViewMovies" component={ViewMovies} />
+          <Route path="/AddArtist" component={AddArtist} />
+          <Route path="/AddMovie" component={AddMovie} />
+          <Route path="/EditArtist" component={EditArtist} />
+          <Route path="/EditAMovie" component={EditMovie} />
         </Switch>
       </BrowserRouter>
     </div>
