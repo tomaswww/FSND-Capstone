@@ -20,7 +20,7 @@ const NavBar = () => {
       {isAuthenticated && (
       <span>
         <Link to="/">Home</Link>&nbsp;
-        <Link to="/profile">Profile</Link>
+        <Link to="/Profile">Profile</Link>
       </span>
     )}
     {isAuthenticated && <button onClick={() => logout()}>Log out</button>}
