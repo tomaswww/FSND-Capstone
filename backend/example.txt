@@ -1,0 +1,33 @@
+The following commands can be used when creating the DB manually for this project:
+
+Creating the DB:
+
+    CREATE DATABASE casting;
+
+Creating Artists Table:
+
+    CREATE TABLE artists (
+   id serial PRIMARY KEY,
+   name VARCHAR (180) NOT NULL,
+   age INTEGER (50) NOT NULL,
+   GENDER VARCHAR (180) NOT NULL
+    );
+
+Creating Movies Table:
+
+    CREATE TABLE movies (
+    id serial PRIMARY KEY,
+    title VARCHAR (180) NOT NULL,
+    release_date TIMESTAMP NOT NULL
+        );
+
+Adding artist to Artist Table:
+
+    INSERT INTO artists (name, age, gender)
+    VALUES ('bill murray', 69, 'male');
+
+Adding movie to Movie Table:
+
+    INSERT INTO movies (title, release_date)
+    VALUES ('ghostbusters 2020', '2020-07-10');
+
