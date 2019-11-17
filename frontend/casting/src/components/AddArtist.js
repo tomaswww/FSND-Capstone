@@ -46,7 +46,6 @@ const AddArtist = () => {
             <h4>Loged in as: {user.nickname}</h4>
             <h1>Enter new Artist Info</h1>
             <hr></hr>
-            
                 <form>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Name</label>
@@ -69,4 +68,3 @@ const AddArtist = () => {
 };
 
 export default AddArtist;
-
