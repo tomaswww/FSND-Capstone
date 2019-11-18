@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import {Component} from 'react';
 import logo from './artist.png';
-
 import { Link } from "react-router-dom";
 import { useAuth0} from "../react-auth0-spa";
 import $ from "jquery";
