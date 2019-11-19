@@ -1,10 +1,8 @@
 import React, { Fragment } from "react";
-import { useAuth0, Auth0Provider, Auth0Context} from "../react-auth0-spa";
+import { useAuth0} from "../react-auth0-spa";
 import $ from "jquery";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Link } from "react-router-dom";
-
 
 
 const Profile = () => {
@@ -13,27 +11,9 @@ const Profile = () => {
   const { getTokenSilently } = useAuth0();
   async function asyncCall() {
     /* var token = await auth0Client.cache.cache["default::openid profile email"].id_token */
-    const accessToken = await getTokenSilently();
-    console.log(accessToken);
-    
-    $.ajax({
-      url: 'https://capstone-auth.auth0.com/oauth/token',
-      type: 'POST',
-      data: JSON.stringify({
-        "Code": accessToken,
-        "Client ID": 'iTFTN1rQ1ko5wSTy3SQu87Pe0nMWeKF3',
-        "Client Secret": 'UOPkywsyMvR5i9Z3g4GrQHKF4YhD7Rbgj_9V7ct0vPpZICDZNGNKoNdin-jYDc51'
-      }),
-      contentType: 'application/json',
-      success: function (data) {
-        alert('Actor succesfully modified!')
-      }
-    });
-    return accessToken;
-    // expected output: 'resolved'
-  }
-
-  
+    const tokenRaw = await getIdTokenClaims();
+    const token = tokenRaw["__raw"];
+    }      
 
   if (loading || !user) {
     return (
