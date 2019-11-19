@@ -8,11 +8,10 @@ import { Link } from "react-router-dom";
 const Profile = () => {
   const { loading, user } = useAuth0();
   const { getIdTokenClaims } = useAuth0();
-  const { getTokenSilently } = useAuth0();
   async function asyncCall() {
-    /* var token = await auth0Client.cache.cache["default::openid profile email"].id_token */
     const tokenRaw = await getIdTokenClaims();
     const token = tokenRaw["__raw"];
+    return token;
     }      
 
   if (loading || !user) {

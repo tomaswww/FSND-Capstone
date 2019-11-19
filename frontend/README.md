@@ -15,6 +15,7 @@ This project uses NPM to manage software dependencies. NPM Relies on the package
 ```bash
 npm install
 npm install react-router-dom @auth0/auth0-spa-js
+npm install react-native
 ```
 
 
