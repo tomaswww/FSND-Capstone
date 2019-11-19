@@ -11,6 +11,24 @@ const ViewArtist = () => {
   async function asyncCall() {
     const tokenRaw = await getIdTokenClaims();
     const token = tokenRaw["__raw"];
+    $.ajax({
+      url: 'http://127.0.0.1:5000/actors',
+      headers: {
+        'Authorization': 'Bearer ' + token
+      },
+      type: 'GET',
+      contentType: 'application/json; charset=utf-8',
+      success: function (data) {
+        const sizeOfArray = data.Actors.length;
+        for (var i = 0; i < sizeOfArray; i++) {
+          var paragraph = document.getElementById('artistsData');
+          var text = document.createTextNode(' ID: ' + data.Actors[i].id + ', Name: ' + data.Actors[i].name + ', Age: ' + data.Actors[i].age + ', Gender: ' + data.Actors[i].gender);
+          paragraph.appendChild(text);
+          var br = document.createElement("br");
+          paragraph.appendChild(br);
+        }
+      }
+    });
     return token;
     }     
   
@@ -21,26 +39,7 @@ const ViewArtist = () => {
     );
   }
   else {
-      const token = asyncCall();
-      $.ajax({
-        url: 'http://127.0.0.1:5000/actors',
-        headers: {
-        'Authorization': 'Bearer '+token
-        },
-        type: 'GET',
-        contentType: 'application/json; charset=utf-8',
-        success: function(data) {
-          const sizeOfArray = data.Actors.length;
-          for (var i=0;i<sizeOfArray;i++){
-          var paragraph = document.getElementById('artistsData');
-          var text = document.createTextNode(' ID: ' + data.Actors[i].id + ', Name: ' + data.Actors[i].name + ', Age: ' + data.Actors[i].age + ', Gender: ' + data.Actors[i].gender);
-          paragraph.appendChild(text);
-          var br = document.createElement("br");
-          paragraph.appendChild(br);
-          }
-        }
-      });
-       
+      asyncCall();
       return (
         <Fragment>
             <body className="App-body">

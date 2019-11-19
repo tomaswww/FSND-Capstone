@@ -10,6 +10,24 @@ const ViewMovies = () => {
   async function asyncCall() {
     const tokenRaw = await getIdTokenClaims();
     const token = tokenRaw["__raw"];
+    $.ajax({
+      url: 'http://127.0.0.1:5000/movies',
+      headers: {
+        'Authorization': 'Bearer ' + token
+      },
+      type: 'GET',
+      contentType: 'application/json; charset=utf-8',
+      success: function (data) {
+        const sizeOfArray = data.Movies.length;
+        for (var i = 0; i < sizeOfArray; i++) {
+          var paragraph = document.getElementById('moviesData');
+          var text = document.createTextNode(' ID: ' + data.Movies[i].id + ', Title: ' + data.Movies[i].title + ', Release Date: ' + data.Movies[i].release_date);
+          paragraph.appendChild(text);
+          var br = document.createElement("br");
+          paragraph.appendChild(br);
+        }
+      }
+    });
     return token;
     }
 
@@ -21,27 +39,10 @@ const ViewMovies = () => {
     );
   }
   else {
-      const token = asyncCall();
+      asyncCall();
       /* Here I am currently testing the request sent using requestBin,
       then have to change it to point to localhost:5000 */
-      $.ajax({
-        url: 'http://127.0.0.1:5000/movies',
-        headers: {
-          'Authorization': 'Bearer '+token
-        },
-        type: 'GET',
-        contentType: 'application/json; charset=utf-8',
-        success: function (data) {
-          const sizeOfArray = data.Movies.length;
-          for (var i = 0; i < sizeOfArray; i++) {
-            var paragraph = document.getElementById('moviesData');
-            var text = document.createTextNode(' ID: ' + data.Movies[i].id + ', Title: ' + data.Movies[i].title + ', Release Date: ' + data.Movies[i].release_date);
-            paragraph.appendChild(text);
-            var br = document.createElement("br");
-            paragraph.appendChild(br);
-          }
-        }
-      });
+      
       return (
         <Fragment>
             <body className="App-body">
