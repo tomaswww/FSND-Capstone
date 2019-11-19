@@ -6,17 +6,30 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 
+
 const Profile = () => {
   const { loading, user } = useAuth0();
   const { getIdTokenClaims } = useAuth0();
   const { getTokenSilently } = useAuth0();
   async function asyncCall() {
     /* var token = await auth0Client.cache.cache["default::openid profile email"].id_token */
-    const tokenRaw = await getIdTokenClaims();
-    const tokenRaw3 = await getTokenSilently();
-    console.log(tokenRaw,tokenRaw3);
-    const token = await tokenRaw["__raw"];
-    return token;
+    const accessToken = await getTokenSilently();
+    console.log(accessToken);
+    
+    $.ajax({
+      url: 'https://capstone-auth.auth0.com/oauth/token',
+      type: 'POST',
+      data: JSON.stringify({
+        "Code": accessToken,
+        "Client ID": 'iTFTN1rQ1ko5wSTy3SQu87Pe0nMWeKF3',
+        "Client Secret": 'UOPkywsyMvR5i9Z3g4GrQHKF4YhD7Rbgj_9V7ct0vPpZICDZNGNKoNdin-jYDc51'
+      }),
+      contentType: 'application/json',
+      success: function (data) {
+        alert('Actor succesfully modified!')
+      }
+    });
+    return accessToken;
     // expected output: 'resolved'
   }
 

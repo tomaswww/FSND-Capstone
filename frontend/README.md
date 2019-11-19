@@ -11,12 +11,11 @@ The Frontend of this project is build using [React](https://reactjs.org/) and us
 
 This project uses NPM to manage software dependencies. NPM Relies on the package.json file located in the `frontend` directory of this repository. After cloning, open your terminal and run:
 
-```bash
-npm install
-```
 
 ```bash
-npm install axios
+npm install
+npm install @auth0/auth0-spa-js
+npm install --save react-router-dom
 ```
 
 
@@ -24,15 +23,18 @@ npm install axios
 
 #### Initializing React APP
 
-From the terminal, inside the frontend foldor run:
+From the terminal, inside the frontend folder run:
 
 ```bash
 npm init react-app casting
+
 ```
 
 ```bash
 npm start
 ```
+
+If any doubts about react, please check [`./casting/`](./casting/README.md) readme.
 
 ### Authentication
 
