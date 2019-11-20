@@ -27,11 +27,12 @@ function App() {
     <div className="App">
       < BrowserRouter >
       <header className="App-header">
-       
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           This is the Casting App
         </p>
+        <img src={logo} className="App-logo" alt="logo" />
+        <p></p>
+        
          < NavBar / >
       </header>
       <Switch>

@@ -21,6 +21,7 @@ const Profile = () => {
     );
   }
   else {
+    asyncCall();
     return (
       <Fragment>
           <body className="App-body">
@@ -28,7 +29,6 @@ const Profile = () => {
               <h2>{user.nickname}</h2>
               <p>{user.email}</p>
               <span id="containerSpan">
-              <p id="tokenFrame"></p>
               </span>
               <span>
                   <div>
@@ -40,6 +40,9 @@ const Profile = () => {
                   <button type="button" id="editMovie" class="btn btn-outline-primary btn-block" ><Link to="/EditMovie">Edit Movie</Link></button>
                   </div>
               </span>
+              <p></p>
+               <p>NOTE: You may not have permission to perform some actions.</p>
+               <p>Please contact System Administrator if you have any doubt about permissions.</p>
         </body>
       </Fragment>
     );
