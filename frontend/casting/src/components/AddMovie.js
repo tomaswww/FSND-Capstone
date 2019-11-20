@@ -1,19 +1,18 @@
 import React from 'react';
-import { useAuth0} from "../react-auth0-spa";
 import {Component} from 'react';
 import logo from './movies.png';
 import $ from "jquery";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Cookies from 'universal-cookie';
+
 
 class MovieForm extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault()
     var newMovie = {"title":event.target.elements.title.value,
   "release_date":event.target.elements.release_date.value }
-  const { getIdTokenClaims } = useAuth0();
-  async function asyncCall() {
-    const tokenRaw = await getIdTokenClaims();
-    const token = tokenRaw["__raw"];
+    const cookies = new Cookies();
+    const token = cookies.get('jwt');
     $.ajax({
       url: 'http://localhost:5000/movies',
       headers: {
@@ -28,8 +27,6 @@ class MovieForm extends React.Component {
       }
     });
     };
-    
-  }
   render() {
     return (
       <body className = "App-body" >

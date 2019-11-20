@@ -3,6 +3,7 @@ import { useAuth0} from "../react-auth0-spa";
 import $ from "jquery";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from "react-router-dom";
+import Cookies from 'universal-cookie';
 
 
 const Profile = () => {
@@ -11,7 +12,8 @@ const Profile = () => {
   async function asyncCall() {
     const tokenRaw = await getIdTokenClaims();
     const token = tokenRaw["__raw"];
-    return token;
+    const cookies = new Cookies();
+    cookies.set('jwt', token, { path: '/' });
     }      
 
   if (loading || !user) {

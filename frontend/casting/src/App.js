@@ -42,7 +42,7 @@ function App() {
           <Route path="/AddArtist" component={AddArtist} />
           <Route path="/AddMovie" component={AddMovie} />
           <Route path="/EditArtist" component={EditArtist} />
-          <Route path="/EditAMovie" component={EditMovie} />
+          <Route path="/EditMovie" component={EditMovie} />
         </Switch>
       </BrowserRouter>
     </div>
