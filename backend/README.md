@@ -59,3 +59,7 @@ GET /actors and /movies
 DELETE /actors/ and /movies/
 POST /actors and /movies and
 PATCH /actors/ and /movies/
+
+## Testing Endpoints
+
+To test the working endpoints please use the Postman collection provided: capstone-test-endpoints.postman_collection.json
