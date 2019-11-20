@@ -4,7 +4,7 @@ from flask import Flask, request, abort, jsonify, render_template, \
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import random
-from models import *
+from models import setup_db, actors, movies
 from .auth.auth import AuthError, requires_auth
 
 
@@ -185,7 +185,7 @@ def create_app(test_config=None):
 
     # @TODO: Create error handlers for all expected errors \
     #  including 404 and 422. --> DONE
-    
+
     @app.errorhandler(404)
     def not_found(error):
         return jsonify({
