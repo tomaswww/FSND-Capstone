@@ -14,6 +14,7 @@ class CastingTestCase(unittest.TestCase):
         """Define test variables and initialize app."""
         self.app = create_app()
         self.client = self.app.test_client
+        self.token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik56RTBSa1pDTXpZMk5qWTRRelU0T0RFMFJFUTNORVE0TmpFek9FTkdOVFUxTkRZNU9ETkdOdyJ9.eyJpc3MiOiJodHRwczovL2NhcHN0b25lLWF1dGguYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVkY2M0ZTM2YmMyMDQyMGUyODc4ZGJhNyIsImF1ZCI6ImNhcHN0b25lIiwiaWF0IjoxNTc0MjgwNjQ4LCJleHAiOjE1NzQyODc4NDgsImF6cCI6ImlURlROMXJRMWtvNXdTVHkzU1F1ODdQZTBuTVdlS0YzIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJhZGQ6YWN0b3IiLCJhZGQ6bW92aWUiLCJjaGFuZ2U6YWN0b3IiLCJjaGFuZ2U6bW92aWUiLCJkZWxldGU6YWN0b3IiLCJkZWxldGU6bW92aWUiLCJyZWFkOmFjdG9ycyIsInJlYWQ6bW92aWVzIl19.IPpiGLmSGr87MkCSRTzteScV6VdZL1tpmQFD_29ApFKXll2MD_nXzp-_Y6apluBauiYApVSNi9XYVo4o6HiiBXWiVuHEZL57EYHufmvGPxieH4pU5vrhIOcMFjIRXwnj5GxyalL_hHmWtBFjRnorkKBhEj_-rRWQ11GoacfqTXSV0fRcbq7ZXt3feZmW6lZ2SFQgarfK_ZIR4bkvHywaUu9381Hq3AgSuRxz6UAQk-hkOUhs2ppQcMapRcS9PWjUv7axJiLnwvAGdytGg0DshmuF2Qy50I_vnnZ_YM2JCllb027eq9vK7TLgJr5Aazt9zJDvk8bHK57OTeA660VtCw"
         self.database_name = "casting"
         self.database_path = "postgres://{}/{}".format(
             'tomaswingord:tomasw87@localhost:5432',
@@ -35,7 +36,7 @@ class CastingTestCase(unittest.TestCase):
     # operation and for expected errors. -- DONE
     def test_get_actors(self):
         res = self.client().get('/actors',
-                                headers={'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik56RTBSa1pDTXpZMk5qWTRRelU0T0RFMFJFUTNORVE0TmpFek9FTkdOVFUxTkRZNU9ETkdOdyJ9.eyJpc3MiOiJodHRwczovL2NhcHN0b25lLWF1dGguYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVkY2M0ZTM2YmMyMDQyMGUyODc4ZGJhNyIsImF1ZCI6ImNhcHN0b25lIiwiaWF0IjoxNTc0Mjc3MjAyLCJleHAiOjE1NzQyODQ0MDIsImF6cCI6ImlURlROMXJRMWtvNXdTVHkzU1F1ODdQZTBuTVdlS0YzIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJhZGQ6YWN0b3IiLCJhZGQ6bW92aWUiLCJjaGFuZ2U6YWN0b3IiLCJjaGFuZ2U6bW92aWUiLCJkZWxldGU6YWN0b3IiLCJkZWxldGU6bW92aWUiLCJyZWFkOmFjdG9ycyIsInJlYWQ6bW92aWVzIl19.Zg8RI_X8iF8DXbrxy2jmkBCu4p7rlGjSw6jGQnDmLWcMSy1RPtvMWBOT71i8-K1nMza-ovqcdyB_Ks66o-eJlumTuklHI5Ljc8lBJrka5sjL2_MImDjBkIuG5vlZlI72DwpGVlzX2Wml5fQCdF9CGno8M5vgLL4LUexOhIjqJ6_FeESujtDZkjyVSF0B5-F-VCFB_Cuf1CafpBxFoc57mduk1HwCreoOrLQt1CN7V46ApnN18hiTT8sT63wxduBcYjIDx_bOgk-nqU9M4B74mi2Mgzo8-Kia4EJBpMUEYMEQ6O3YmCWUUwxjb7ilZOAPdOWnJDaww2h8Uc313skNKA'})
+                                headers={'Authorization': 'Bearer '+self.token})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
@@ -43,14 +44,14 @@ class CastingTestCase(unittest.TestCase):
 
     def test_get_movies(self):
         res = self.client().get('/movies',
-                                headers={'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik56RTBSa1pDTXpZMk5qWTRRelU0T0RFMFJFUTNORVE0TmpFek9FTkdOVFUxTkRZNU9ETkdOdyJ9.eyJpc3MiOiJodHRwczovL2NhcHN0b25lLWF1dGguYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVkY2M0ZTM2YmMyMDQyMGUyODc4ZGJhNyIsImF1ZCI6ImNhcHN0b25lIiwiaWF0IjoxNTc0Mjc3MjAyLCJleHAiOjE1NzQyODQ0MDIsImF6cCI6ImlURlROMXJRMWtvNXdTVHkzU1F1ODdQZTBuTVdlS0YzIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJhZGQ6YWN0b3IiLCJhZGQ6bW92aWUiLCJjaGFuZ2U6YWN0b3IiLCJjaGFuZ2U6bW92aWUiLCJkZWxldGU6YWN0b3IiLCJkZWxldGU6bW92aWUiLCJyZWFkOmFjdG9ycyIsInJlYWQ6bW92aWVzIl19.Zg8RI_X8iF8DXbrxy2jmkBCu4p7rlGjSw6jGQnDmLWcMSy1RPtvMWBOT71i8-K1nMza-ovqcdyB_Ks66o-eJlumTuklHI5Ljc8lBJrka5sjL2_MImDjBkIuG5vlZlI72DwpGVlzX2Wml5fQCdF9CGno8M5vgLL4LUexOhIjqJ6_FeESujtDZkjyVSF0B5-F-VCFB_Cuf1CafpBxFoc57mduk1HwCreoOrLQt1CN7V46ApnN18hiTT8sT63wxduBcYjIDx_bOgk-nqU9M4B74mi2Mgzo8-Kia4EJBpMUEYMEQ6O3YmCWUUwxjb7ilZOAPdOWnJDaww2h8Uc313skNKA'})
+                                headers={'Authorization': 'Bearer '+self.token})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
 
     def test_delete_actor(self):
         res = self.client().delete('actors/1',
-                                headers={'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik56RTBSa1pDTXpZMk5qWTRRelU0T0RFMFJFUTNORVE0TmpFek9FTkdOVFUxTkRZNU9ETkdOdyJ9.eyJpc3MiOiJodHRwczovL2NhcHN0b25lLWF1dGguYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVkY2M0ZTM2YmMyMDQyMGUyODc4ZGJhNyIsImF1ZCI6ImNhcHN0b25lIiwiaWF0IjoxNTc0Mjc3MjAyLCJleHAiOjE1NzQyODQ0MDIsImF6cCI6ImlURlROMXJRMWtvNXdTVHkzU1F1ODdQZTBuTVdlS0YzIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJhZGQ6YWN0b3IiLCJhZGQ6bW92aWUiLCJjaGFuZ2U6YWN0b3IiLCJjaGFuZ2U6bW92aWUiLCJkZWxldGU6YWN0b3IiLCJkZWxldGU6bW92aWUiLCJyZWFkOmFjdG9ycyIsInJlYWQ6bW92aWVzIl19.Zg8RI_X8iF8DXbrxy2jmkBCu4p7rlGjSw6jGQnDmLWcMSy1RPtvMWBOT71i8-K1nMza-ovqcdyB_Ks66o-eJlumTuklHI5Ljc8lBJrka5sjL2_MImDjBkIuG5vlZlI72DwpGVlzX2Wml5fQCdF9CGno8M5vgLL4LUexOhIjqJ6_FeESujtDZkjyVSF0B5-F-VCFB_Cuf1CafpBxFoc57mduk1HwCreoOrLQt1CN7V46ApnN18hiTT8sT63wxduBcYjIDx_bOgk-nqU9M4B74mi2Mgzo8-Kia4EJBpMUEYMEQ6O3YmCWUUwxjb7ilZOAPdOWnJDaww2h8Uc313skNKA'})
+                                   headers={'Authorization': 'Bearer '+self.token})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
@@ -58,14 +59,14 @@ class CastingTestCase(unittest.TestCase):
 
     def test_delete_actor_invalid(self):
         res = self.client().delete('actors/99',
-                                headers={'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik56RTBSa1pDTXpZMk5qWTRRelU0T0RFMFJFUTNORVE0TmpFek9FTkdOVFUxTkRZNU9ETkdOdyJ9.eyJpc3MiOiJodHRwczovL2NhcHN0b25lLWF1dGguYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVkY2M0ZTM2YmMyMDQyMGUyODc4ZGJhNyIsImF1ZCI6ImNhcHN0b25lIiwiaWF0IjoxNTc0Mjc3MjAyLCJleHAiOjE1NzQyODQ0MDIsImF6cCI6ImlURlROMXJRMWtvNXdTVHkzU1F1ODdQZTBuTVdlS0YzIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJhZGQ6YWN0b3IiLCJhZGQ6bW92aWUiLCJjaGFuZ2U6YWN0b3IiLCJjaGFuZ2U6bW92aWUiLCJkZWxldGU6YWN0b3IiLCJkZWxldGU6bW92aWUiLCJyZWFkOmFjdG9ycyIsInJlYWQ6bW92aWVzIl19.Zg8RI_X8iF8DXbrxy2jmkBCu4p7rlGjSw6jGQnDmLWcMSy1RPtvMWBOT71i8-K1nMza-ovqcdyB_Ks66o-eJlumTuklHI5Ljc8lBJrka5sjL2_MImDjBkIuG5vlZlI72DwpGVlzX2Wml5fQCdF9CGno8M5vgLL4LUexOhIjqJ6_FeESujtDZkjyVSF0B5-F-VCFB_Cuf1CafpBxFoc57mduk1HwCreoOrLQt1CN7V46ApnN18hiTT8sT63wxduBcYjIDx_bOgk-nqU9M4B74mi2Mgzo8-Kia4EJBpMUEYMEQ6O3YmCWUUwxjb7ilZOAPdOWnJDaww2h8Uc313skNKA'})
+                                   headers={'Authorization': 'Bearer '+self.token})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 401)
         self.assertEqual(data['success'], False)
 
     def test_delete_movie(self):
         res = self.client().delete('movies/1',
-                                headers={'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik56RTBSa1pDTXpZMk5qWTRRelU0T0RFMFJFUTNORVE0TmpFek9FTkdOVFUxTkRZNU9ETkdOdyJ9.eyJpc3MiOiJodHRwczovL2NhcHN0b25lLWF1dGguYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVkY2M0ZTM2YmMyMDQyMGUyODc4ZGJhNyIsImF1ZCI6ImNhcHN0b25lIiwiaWF0IjoxNTc0Mjc3MjAyLCJleHAiOjE1NzQyODQ0MDIsImF6cCI6ImlURlROMXJRMWtvNXdTVHkzU1F1ODdQZTBuTVdlS0YzIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJhZGQ6YWN0b3IiLCJhZGQ6bW92aWUiLCJjaGFuZ2U6YWN0b3IiLCJjaGFuZ2U6bW92aWUiLCJkZWxldGU6YWN0b3IiLCJkZWxldGU6bW92aWUiLCJyZWFkOmFjdG9ycyIsInJlYWQ6bW92aWVzIl19.Zg8RI_X8iF8DXbrxy2jmkBCu4p7rlGjSw6jGQnDmLWcMSy1RPtvMWBOT71i8-K1nMza-ovqcdyB_Ks66o-eJlumTuklHI5Ljc8lBJrka5sjL2_MImDjBkIuG5vlZlI72DwpGVlzX2Wml5fQCdF9CGno8M5vgLL4LUexOhIjqJ6_FeESujtDZkjyVSF0B5-F-VCFB_Cuf1CafpBxFoc57mduk1HwCreoOrLQt1CN7V46ApnN18hiTT8sT63wxduBcYjIDx_bOgk-nqU9M4B74mi2Mgzo8-Kia4EJBpMUEYMEQ6O3YmCWUUwxjb7ilZOAPdOWnJDaww2h8Uc313skNKA'})
+                                   headers={'Authorization': 'Bearer '+self.token})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
@@ -73,7 +74,7 @@ class CastingTestCase(unittest.TestCase):
 
     def test_delete_movie_invalid(self):
         res = self.client().delete('movies/99',
-                                headers={'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik56RTBSa1pDTXpZMk5qWTRRelU0T0RFMFJFUTNORVE0TmpFek9FTkdOVFUxTkRZNU9ETkdOdyJ9.eyJpc3MiOiJodHRwczovL2NhcHN0b25lLWF1dGguYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVkY2M0ZTM2YmMyMDQyMGUyODc4ZGJhNyIsImF1ZCI6ImNhcHN0b25lIiwiaWF0IjoxNTc0Mjc3MjAyLCJleHAiOjE1NzQyODQ0MDIsImF6cCI6ImlURlROMXJRMWtvNXdTVHkzU1F1ODdQZTBuTVdlS0YzIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJhZGQ6YWN0b3IiLCJhZGQ6bW92aWUiLCJjaGFuZ2U6YWN0b3IiLCJjaGFuZ2U6bW92aWUiLCJkZWxldGU6YWN0b3IiLCJkZWxldGU6bW92aWUiLCJyZWFkOmFjdG9ycyIsInJlYWQ6bW92aWVzIl19.Zg8RI_X8iF8DXbrxy2jmkBCu4p7rlGjSw6jGQnDmLWcMSy1RPtvMWBOT71i8-K1nMza-ovqcdyB_Ks66o-eJlumTuklHI5Ljc8lBJrka5sjL2_MImDjBkIuG5vlZlI72DwpGVlzX2Wml5fQCdF9CGno8M5vgLL4LUexOhIjqJ6_FeESujtDZkjyVSF0B5-F-VCFB_Cuf1CafpBxFoc57mduk1HwCreoOrLQt1CN7V46ApnN18hiTT8sT63wxduBcYjIDx_bOgk-nqU9M4B74mi2Mgzo8-Kia4EJBpMUEYMEQ6O3YmCWUUwxjb7ilZOAPdOWnJDaww2h8Uc313skNKA'})
+                                   headers={'Authorization': 'Bearer '+self.token})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 401)
         self.assertEqual(data['success'], False)
@@ -85,14 +86,14 @@ class CastingTestCase(unittest.TestCase):
             "gender": "Male"
         }
         res = self.client().post('/actors',
-                                headers={'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik56RTBSa1pDTXpZMk5qWTRRelU0T0RFMFJFUTNORVE0TmpFek9FTkdOVFUxTkRZNU9ETkdOdyJ9.eyJpc3MiOiJodHRwczovL2NhcHN0b25lLWF1dGguYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVkY2M0ZTM2YmMyMDQyMGUyODc4ZGJhNyIsImF1ZCI6ImNhcHN0b25lIiwiaWF0IjoxNTc0Mjc3MjAyLCJleHAiOjE1NzQyODQ0MDIsImF6cCI6ImlURlROMXJRMWtvNXdTVHkzU1F1ODdQZTBuTVdlS0YzIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJhZGQ6YWN0b3IiLCJhZGQ6bW92aWUiLCJjaGFuZ2U6YWN0b3IiLCJjaGFuZ2U6bW92aWUiLCJkZWxldGU6YWN0b3IiLCJkZWxldGU6bW92aWUiLCJyZWFkOmFjdG9ycyIsInJlYWQ6bW92aWVzIl19.Zg8RI_X8iF8DXbrxy2jmkBCu4p7rlGjSw6jGQnDmLWcMSy1RPtvMWBOT71i8-K1nMza-ovqcdyB_Ks66o-eJlumTuklHI5Ljc8lBJrka5sjL2_MImDjBkIuG5vlZlI72DwpGVlzX2Wml5fQCdF9CGno8M5vgLL4LUexOhIjqJ6_FeESujtDZkjyVSF0B5-F-VCFB_Cuf1CafpBxFoc57mduk1HwCreoOrLQt1CN7V46ApnN18hiTT8sT63wxduBcYjIDx_bOgk-nqU9M4B74mi2Mgzo8-Kia4EJBpMUEYMEQ6O3YmCWUUwxjb7ilZOAPdOWnJDaww2h8Uc313skNKA'}, json=new_actor)
+                                 headers={'Authorization': 'Bearer '+self.token}, json = new_actor)
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
 
     def test_post_actor_invalid(self):
         res = self.client().post('/actors',
-                                headers={'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik56RTBSa1pDTXpZMk5qWTRRelU0T0RFMFJFUTNORVE0TmpFek9FTkdOVFUxTkRZNU9ETkdOdyJ9.eyJpc3MiOiJodHRwczovL2NhcHN0b25lLWF1dGguYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVkY2M0ZTM2YmMyMDQyMGUyODc4ZGJhNyIsImF1ZCI6ImNhcHN0b25lIiwiaWF0IjoxNTc0Mjc3MjAyLCJleHAiOjE1NzQyODQ0MDIsImF6cCI6ImlURlROMXJRMWtvNXdTVHkzU1F1ODdQZTBuTVdlS0YzIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJhZGQ6YWN0b3IiLCJhZGQ6bW92aWUiLCJjaGFuZ2U6YWN0b3IiLCJjaGFuZ2U6bW92aWUiLCJkZWxldGU6YWN0b3IiLCJkZWxldGU6bW92aWUiLCJyZWFkOmFjdG9ycyIsInJlYWQ6bW92aWVzIl19.Zg8RI_X8iF8DXbrxy2jmkBCu4p7rlGjSw6jGQnDmLWcMSy1RPtvMWBOT71i8-K1nMza-ovqcdyB_Ks66o-eJlumTuklHI5Ljc8lBJrka5sjL2_MImDjBkIuG5vlZlI72DwpGVlzX2Wml5fQCdF9CGno8M5vgLL4LUexOhIjqJ6_FeESujtDZkjyVSF0B5-F-VCFB_Cuf1CafpBxFoc57mduk1HwCreoOrLQt1CN7V46ApnN18hiTT8sT63wxduBcYjIDx_bOgk-nqU9M4B74mi2Mgzo8-Kia4EJBpMUEYMEQ6O3YmCWUUwxjb7ilZOAPdOWnJDaww2h8Uc313skNKA'})
+                                 headers={'Authorization': 'Bearer '+self.token})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 401)
         self.assertEqual(data['success'], False)
@@ -103,14 +104,14 @@ class CastingTestCase(unittest.TestCase):
             "release_date": "1999-11-02"
         }
         res = self.client().post('/movies',
-                                headers={'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik56RTBSa1pDTXpZMk5qWTRRelU0T0RFMFJFUTNORVE0TmpFek9FTkdOVFUxTkRZNU9ETkdOdyJ9.eyJpc3MiOiJodHRwczovL2NhcHN0b25lLWF1dGguYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVkY2M0ZTM2YmMyMDQyMGUyODc4ZGJhNyIsImF1ZCI6ImNhcHN0b25lIiwiaWF0IjoxNTc0Mjc3MjAyLCJleHAiOjE1NzQyODQ0MDIsImF6cCI6ImlURlROMXJRMWtvNXdTVHkzU1F1ODdQZTBuTVdlS0YzIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJhZGQ6YWN0b3IiLCJhZGQ6bW92aWUiLCJjaGFuZ2U6YWN0b3IiLCJjaGFuZ2U6bW92aWUiLCJkZWxldGU6YWN0b3IiLCJkZWxldGU6bW92aWUiLCJyZWFkOmFjdG9ycyIsInJlYWQ6bW92aWVzIl19.Zg8RI_X8iF8DXbrxy2jmkBCu4p7rlGjSw6jGQnDmLWcMSy1RPtvMWBOT71i8-K1nMza-ovqcdyB_Ks66o-eJlumTuklHI5Ljc8lBJrka5sjL2_MImDjBkIuG5vlZlI72DwpGVlzX2Wml5fQCdF9CGno8M5vgLL4LUexOhIjqJ6_FeESujtDZkjyVSF0B5-F-VCFB_Cuf1CafpBxFoc57mduk1HwCreoOrLQt1CN7V46ApnN18hiTT8sT63wxduBcYjIDx_bOgk-nqU9M4B74mi2Mgzo8-Kia4EJBpMUEYMEQ6O3YmCWUUwxjb7ilZOAPdOWnJDaww2h8Uc313skNKA'}, json=new_movie)
+                                 headers={'Authorization': 'Bearer '+self.token}, json = new_movie)
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
 
     def test_post_movie_invalid(self):
         res = self.client().post('/movies',
-                                headers={'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik56RTBSa1pDTXpZMk5qWTRRelU0T0RFMFJFUTNORVE0TmpFek9FTkdOVFUxTkRZNU9ETkdOdyJ9.eyJpc3MiOiJodHRwczovL2NhcHN0b25lLWF1dGguYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVkY2M0ZTM2YmMyMDQyMGUyODc4ZGJhNyIsImF1ZCI6ImNhcHN0b25lIiwiaWF0IjoxNTc0Mjc3MjAyLCJleHAiOjE1NzQyODQ0MDIsImF6cCI6ImlURlROMXJRMWtvNXdTVHkzU1F1ODdQZTBuTVdlS0YzIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJhZGQ6YWN0b3IiLCJhZGQ6bW92aWUiLCJjaGFuZ2U6YWN0b3IiLCJjaGFuZ2U6bW92aWUiLCJkZWxldGU6YWN0b3IiLCJkZWxldGU6bW92aWUiLCJyZWFkOmFjdG9ycyIsInJlYWQ6bW92aWVzIl19.Zg8RI_X8iF8DXbrxy2jmkBCu4p7rlGjSw6jGQnDmLWcMSy1RPtvMWBOT71i8-K1nMza-ovqcdyB_Ks66o-eJlumTuklHI5Ljc8lBJrka5sjL2_MImDjBkIuG5vlZlI72DwpGVlzX2Wml5fQCdF9CGno8M5vgLL4LUexOhIjqJ6_FeESujtDZkjyVSF0B5-F-VCFB_Cuf1CafpBxFoc57mduk1HwCreoOrLQt1CN7V46ApnN18hiTT8sT63wxduBcYjIDx_bOgk-nqU9M4B74mi2Mgzo8-Kia4EJBpMUEYMEQ6O3YmCWUUwxjb7ilZOAPdOWnJDaww2h8Uc313skNKA'})
+                                 headers={'Authorization': 'Bearer '+self.token})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 401)
         self.assertEqual(data['success'], False)
@@ -120,17 +121,14 @@ class CastingTestCase(unittest.TestCase):
             "name": "john malkovich",
         }
         res = self.client().patch('/actors/4',
-                                headers={'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik56RTBSa1pDTXpZMk5qWTRRelU0T0RFMFJFUTNORVE0TmpFek9FTkdOVFUxTkRZNU9ETkdOdyJ9.eyJpc3MiOiJodHRwczovL2NhcHN0b25lLWF1dGguYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVkY2M0ZTM2YmMyMDQyMGUyODc4ZGJhNyIsImF1ZCI6ImNhcHN0b25lIiwiaWF0IjoxNTc0Mjc3MjAyLCJleHAiOjE1NzQyODQ0MDIsImF6cCI6ImlURlROMXJRMWtvNXdTVHkzU1F1ODdQZTBuTVdlS0YzIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJhZGQ6YWN0b3IiLCJhZGQ6bW92aWUiLCJjaGFuZ2U6YWN0b3IiLCJjaGFuZ2U6bW92aWUiLCJkZWxldGU6YWN0b3IiLCJkZWxldGU6bW92aWUiLCJyZWFkOmFjdG9ycyIsInJlYWQ6bW92aWVzIl19.Zg8RI_X8iF8DXbrxy2jmkBCu4p7rlGjSw6jGQnDmLWcMSy1RPtvMWBOT71i8-K1nMza-ovqcdyB_Ks66o-eJlumTuklHI5Ljc8lBJrka5sjL2_MImDjBkIuG5vlZlI72DwpGVlzX2Wml5fQCdF9CGno8M5vgLL4LUexOhIjqJ6_FeESujtDZkjyVSF0B5-F-VCFB_Cuf1CafpBxFoc57mduk1HwCreoOrLQt1CN7V46ApnN18hiTT8sT63wxduBcYjIDx_bOgk-nqU9M4B74mi2Mgzo8-Kia4EJBpMUEYMEQ6O3YmCWUUwxjb7ilZOAPdOWnJDaww2h8Uc313skNKA'}, json=new_actor)
+                                  headers={'Authorization': 'Bearer '+self.token}, json = new_actor)
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
 
     def test_patch_actor_invalid(self):
-        new_actor = {
-            "name": "invalid testing"
-        }
         res = self.client().patch('/actors/99',
-                                headers={'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik56RTBSa1pDTXpZMk5qWTRRelU0T0RFMFJFUTNORVE0TmpFek9FTkdOVFUxTkRZNU9ETkdOdyJ9.eyJpc3MiOiJodHRwczovL2NhcHN0b25lLWF1dGguYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVkY2M0ZTM2YmMyMDQyMGUyODc4ZGJhNyIsImF1ZCI6ImNhcHN0b25lIiwiaWF0IjoxNTc0Mjc3MjAyLCJleHAiOjE1NzQyODQ0MDIsImF6cCI6ImlURlROMXJRMWtvNXdTVHkzU1F1ODdQZTBuTVdlS0YzIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJhZGQ6YWN0b3IiLCJhZGQ6bW92aWUiLCJjaGFuZ2U6YWN0b3IiLCJjaGFuZ2U6bW92aWUiLCJkZWxldGU6YWN0b3IiLCJkZWxldGU6bW92aWUiLCJyZWFkOmFjdG9ycyIsInJlYWQ6bW92aWVzIl19.Zg8RI_X8iF8DXbrxy2jmkBCu4p7rlGjSw6jGQnDmLWcMSy1RPtvMWBOT71i8-K1nMza-ovqcdyB_Ks66o-eJlumTuklHI5Ljc8lBJrka5sjL2_MImDjBkIuG5vlZlI72DwpGVlzX2Wml5fQCdF9CGno8M5vgLL4LUexOhIjqJ6_FeESujtDZkjyVSF0B5-F-VCFB_Cuf1CafpBxFoc57mduk1HwCreoOrLQt1CN7V46ApnN18hiTT8sT63wxduBcYjIDx_bOgk-nqU9M4B74mi2Mgzo8-Kia4EJBpMUEYMEQ6O3YmCWUUwxjb7ilZOAPdOWnJDaww2h8Uc313skNKA'}, json=new_actor)
+                                  headers={'Authorization': 'Bearer '+self.token})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 401)
         self.assertEqual(data['success'], False)
@@ -140,17 +138,14 @@ class CastingTestCase(unittest.TestCase):
             "title": "finding nemo",
         }
         res = self.client().patch('/movies/3',
-                                headers={'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik56RTBSa1pDTXpZMk5qWTRRelU0T0RFMFJFUTNORVE0TmpFek9FTkdOVFUxTkRZNU9ETkdOdyJ9.eyJpc3MiOiJodHRwczovL2NhcHN0b25lLWF1dGguYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVkY2M0ZTM2YmMyMDQyMGUyODc4ZGJhNyIsImF1ZCI6ImNhcHN0b25lIiwiaWF0IjoxNTc0Mjc3MjAyLCJleHAiOjE1NzQyODQ0MDIsImF6cCI6ImlURlROMXJRMWtvNXdTVHkzU1F1ODdQZTBuTVdlS0YzIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJhZGQ6YWN0b3IiLCJhZGQ6bW92aWUiLCJjaGFuZ2U6YWN0b3IiLCJjaGFuZ2U6bW92aWUiLCJkZWxldGU6YWN0b3IiLCJkZWxldGU6bW92aWUiLCJyZWFkOmFjdG9ycyIsInJlYWQ6bW92aWVzIl19.Zg8RI_X8iF8DXbrxy2jmkBCu4p7rlGjSw6jGQnDmLWcMSy1RPtvMWBOT71i8-K1nMza-ovqcdyB_Ks66o-eJlumTuklHI5Ljc8lBJrka5sjL2_MImDjBkIuG5vlZlI72DwpGVlzX2Wml5fQCdF9CGno8M5vgLL4LUexOhIjqJ6_FeESujtDZkjyVSF0B5-F-VCFB_Cuf1CafpBxFoc57mduk1HwCreoOrLQt1CN7V46ApnN18hiTT8sT63wxduBcYjIDx_bOgk-nqU9M4B74mi2Mgzo8-Kia4EJBpMUEYMEQ6O3YmCWUUwxjb7ilZOAPdOWnJDaww2h8Uc313skNKA'}, json=new_movie)
+                                  headers={'Authorization': 'Bearer '+self.token}), json = new_movie)
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
 
     def test_patch_movie_invalid(self):
-        new_movie = {
-            "name": "invalid testing"
-        }
         res = self.client().patch('/movies/99',
-                                headers={'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik56RTBSa1pDTXpZMk5qWTRRelU0T0RFMFJFUTNORVE0TmpFek9FTkdOVFUxTkRZNU9ETkdOdyJ9.eyJpc3MiOiJodHRwczovL2NhcHN0b25lLWF1dGguYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVkY2M0ZTM2YmMyMDQyMGUyODc4ZGJhNyIsImF1ZCI6ImNhcHN0b25lIiwiaWF0IjoxNTc0Mjc3MjAyLCJleHAiOjE1NzQyODQ0MDIsImF6cCI6ImlURlROMXJRMWtvNXdTVHkzU1F1ODdQZTBuTVdlS0YzIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJhZGQ6YWN0b3IiLCJhZGQ6bW92aWUiLCJjaGFuZ2U6YWN0b3IiLCJjaGFuZ2U6bW92aWUiLCJkZWxldGU6YWN0b3IiLCJkZWxldGU6bW92aWUiLCJyZWFkOmFjdG9ycyIsInJlYWQ6bW92aWVzIl19.Zg8RI_X8iF8DXbrxy2jmkBCu4p7rlGjSw6jGQnDmLWcMSy1RPtvMWBOT71i8-K1nMza-ovqcdyB_Ks66o-eJlumTuklHI5Ljc8lBJrka5sjL2_MImDjBkIuG5vlZlI72DwpGVlzX2Wml5fQCdF9CGno8M5vgLL4LUexOhIjqJ6_FeESujtDZkjyVSF0B5-F-VCFB_Cuf1CafpBxFoc57mduk1HwCreoOrLQt1CN7V46ApnN18hiTT8sT63wxduBcYjIDx_bOgk-nqU9M4B74mi2Mgzo8-Kia4EJBpMUEYMEQ6O3YmCWUUwxjb7ilZOAPdOWnJDaww2h8Uc313skNKA'}, json=new_movie)
+        headers = {'Authorization': 'Bearer '+self.token})
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 401)
         self.assertEqual(data['success'], False)

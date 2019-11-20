@@ -90,8 +90,10 @@ The tokens created for this roles can be found on the setup of:[`capstone-test-e
 
 ## Testing Endpoints
 
+### Includes tests demonstrating role-based access control:
 To test the working endpoints please use the Postman collection provided: capstone-test-endpoints.postman_collection.json
 
+### Includes at least one test for expected success and error behavior for each endpoint using the unittest library:
 To test using unittest, make sure to have the backend runing, available data created on the db and from inside the backend folder, run:
 
 ```bash
