@@ -1,8 +1,8 @@
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 
-from backend.flaskr.__init__.py import create_app
-from backend.flaskr.models.py import setup_db
+from backend.flaskr.__init__ import create_app
+from backend.flaskr.models import setup_db
 
 app = create_app()
 db = setup_db()
