@@ -1,5 +1,4 @@
 import React from 'react';
-import {Component} from 'react';
 import logo from './movies.png';
 import $ from "jquery";
 import 'bootstrap/dist/css/bootstrap.min.css';

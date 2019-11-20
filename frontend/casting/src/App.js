@@ -7,11 +7,11 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import NavBar from "./components/NavBar";
 import Profile from "./components/Profile";
-import ViewArtists from "./components/ViewArtists";
+import ViewActors from "./components/ViewActors";
 import ViewMovies from "./components/ViewMovies";
-import AddArtist from "./components/AddArtist";
+import AddActor from "./components/AddActor";
 import AddMovie from "./components/AddMovie";
-import EditArtist from "./components/EditArtist";
+import EditActor from "./components/EditActor";
 import EditMovie from "./components/EditMovie";
 
 
@@ -37,11 +37,11 @@ function App() {
       <Switch>
           <Route path="/" exact />
           <Route path="/Profile" component={Profile} />
-          <Route path="/ViewArtists" component={ViewArtists} />
+          <Route path="/ViewActors" component={ViewActors} />
           <Route path="/ViewMovies" component={ViewMovies} />
-          <Route path="/AddArtist" component={AddArtist} />
+          <Route path="/AddActor" component={AddActor} />
           <Route path="/AddMovie" component={AddMovie} />
-          <Route path="/EditArtist" component={EditArtist} />
+          <Route path="/EditActor" component={EditActor} />
           <Route path="/EditMovie" component={EditMovie} />
         </Switch>
       </BrowserRouter>

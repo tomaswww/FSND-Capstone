@@ -7,7 +7,7 @@ import Cookies from 'universal-cookie';
 
 
 
-const ViewArtist = () => {
+const ViewActors = () => {
   const { loading, user } = useAuth0();
   async function asyncCall() {
     const cookies = new Cookies();
@@ -22,7 +22,7 @@ const ViewArtist = () => {
       success: function (data) {
         const sizeOfArray = data.Actors.length;
         for (var i = 0; i < sizeOfArray; i++) {
-          var paragraph = document.getElementById('artistsData');
+          var paragraph = document.getElementById('actorsData');
           var text = document.createTextNode(' ID: ' + data.Actors[i].id + ', Name: ' + data.Actors[i].name + ', Age: ' + data.Actors[i].age + ', Gender: ' + data.Actors[i].gender);
           paragraph.appendChild(text);
           var br = document.createElement("br");
@@ -44,15 +44,15 @@ const ViewArtist = () => {
       return (
         <Fragment>
             <body className="App-body">
-                <img src={logo} alt="artist" />
+                <img src={logo} alt="actor" />
                 <h4>Loged in as: {user.nickname}</h4>
                 <span>
                     <div class="card">
                         <div class="card-header">
-                            All Artists:
+                            All Actors:
                         </div>
                         <div class="card-body">
-                            <p class="card-text" id="artistsData"></p>
+                            <p class="card-text" id="aactorsData"></p>
                             <a href="/Profile" class="btn btn-primary">Go Back</a>
                         </div>
                     </div>
@@ -63,5 +63,5 @@ const ViewArtist = () => {
   };
   };
 
-export default ViewArtist;
+export default ViewActors;
   

@@ -1,27 +1,16 @@
-import React, { Fragment } from 'react';
-import {Component} from 'react';
+import React from 'react';
 import logo from './artist.png';
 import $ from "jquery";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Cookies from 'universal-cookie';
 
 
-class ArtistForm extends React.Component {
+class ActorForm extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault()
-    const newArtist = {};
-    if (event.target.elements.id.value) {
-      newArtist['id'] = event.target.elements.id.value;
-    }
-    if (event.target.elements.name.value) {
-      newArtist['name'] = event.target.elements.name.value;
-    }
-    if (event.target.elements.age.value) {
-      newArtist['age'] = event.target.elements.age.value;
-    }
-    if (event.target.elements.gender.value) {
-      newArtist['gender'] = event.target.elements.gender.value;
-    }
+    var newActor = {"name":event.target.elements.name.value,
+  "age": event.target.elements.age.value, "gender": event.target.elements.gender.value
+  }
   const cookies = new Cookies();
   const token = cookies.get('jwt');
     $.ajax({
@@ -30,7 +19,7 @@ class ArtistForm extends React.Component {
         'Authorization': 'Bearer '+token
       },
       type: 'POST',
-      data: JSON.stringify(newArtist),
+      data: JSON.stringify(newActor),
       contentType: 'application/json',
       success: function () {
         alert('Artist succesfully added!')
@@ -41,26 +30,16 @@ class ArtistForm extends React.Component {
   render() {
     return (
       <body className = "App-body" >
-        <img src={logo} alt="artist" />
-            <h1>Enter Artist Info</h1>
-            <h6>NOTE: For editing the Actor info you must know the actor ID</h6>
+        <img src={logo} alt="actor" />
+            <h1>Enter new Actor Info</h1>
             <hr></hr>
       <form onSubmit={this.handleSubmit}>
-        <label>
-          Artist ID:
-          <input
-            type="number"
-            name="id"
-            ref={node => (this.inputNode = node)} required
-          />
-        </label>
-        <br></br>
         <label>
           Name:
           <input
             type="text"
             name="name"
-            ref={node => (this.inputNode = node)} 
+            ref={node => (this.inputNode = node)} required
           />
         </label>
         <br></br>
@@ -69,7 +48,7 @@ class ArtistForm extends React.Component {
           <input
             type="number"
             name="age"
-            ref={node => (this.inputNode = node)} 
+            ref={node => (this.inputNode = node)} required
           />
         </label>
         <br></br>
@@ -78,7 +57,7 @@ class ArtistForm extends React.Component {
           <input
             type="text"
             name="gender"
-            ref={node => (this.inputNode = node)} 
+            ref={node => (this.inputNode = node)} required
           />
         </label>
         <br></br>
@@ -88,4 +67,4 @@ class ArtistForm extends React.Component {
     )
   }
 }
-export default ArtistForm;
+export default ActorForm;
