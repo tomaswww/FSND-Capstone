@@ -6,10 +6,10 @@ Creating the DB:
 
 Creating Artists Table:
 
-    CREATE TABLE artists (
+    CREATE TABLE actors (
    id serial PRIMARY KEY,
    name VARCHAR (180) NOT NULL,
-   age INTEGER (50) NOT NULL,
+   age INTEGER NOT NULL,
    GENDER VARCHAR (180) NOT NULL
     );
 
@@ -21,13 +21,31 @@ Creating Movies Table:
     release_date TIMESTAMP NOT NULL
         );
 
-Adding artist to Artist Table:
+Adding actors to actors Table:
 
-    INSERT INTO artists (name, age, gender)
-    VALUES ('bill murray', 69, 'male');
+    INSERT INTO actors (name, age, gender)
+    VALUES ('Bill Murray', 69, 'male');
 
-Adding movie to Movie Table:
+    INSERT INTO actors (name, age, gender)
+    VALUES ('Ernie Hudson', 73, 'male');
+
+    INSERT INTO actors (name, age, gender)
+    VALUES ('Sigourney Weaver', 70, 'female');
+
+    INSERT INTO actors (name, age, gender)
+    VALUES ('Dan Aykroyd', 67, 'male');
+
+Adding movie to Movies Table:
 
     INSERT INTO movies (title, release_date)
-    VALUES ('ghostbusters 2020', '2020-07-10');
+    VALUES ('Ghostbusters', '1984-06-08');
+
+    INSERT INTO movies (title, release_date)
+    VALUES ('Ghostbusters II', '1989-06-16');
+
+    INSERT INTO movies (title, release_date)
+    VALUES ('Ghostbusters: Answer the Call', '2016-07-15');
+
+    INSERT INTO movies (title, release_date)
+    VALUES ('Ghostbusters 2020', '2020-07-10');
 
