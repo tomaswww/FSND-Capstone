@@ -92,7 +92,7 @@ The tokens created for this roles can be found on the setup of:[`capstone-test-e
 
 To test the working endpoints please use the Postman collection provided: capstone-test-endpoints.postman_collection.json
 
-To test using unittest, make sure to have the backend runing and from inside the backend folder, run:
+To test using unittest, make sure to have the backend runing, available data created on the db and from inside the backend folder, run:
 
 ```bash
 python test_app.py;
