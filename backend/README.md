@@ -31,7 +31,7 @@ This will install all of the required packages we selected within the `requireme
 
 ## Configuring the DB
 
-For this project you'll have to setup a local DB and then complete the info about it on the [`models.py`](models.py) file.
+For this project you'll have to setup a local postgresql DB and then complete the info about it on the [`models.py`](models.py) file.
 
 ## Example DB
 
@@ -59,6 +59,34 @@ GET /actors and /movies
 DELETE /actors/ and /movies/
 POST /actors and /movies and
 PATCH /actors/ and /movies/
+
+
+## API behavior and RBAC controls
+
+The API has three different roles
+
+Roles:
+
+Casting Assistant:
+    Can view actors and movies 
+
+    (read:actors , read:movies)
+
+Casting Director:
+    All permissions a Casting Assistant has and…
+    Add or delete an actor from the database
+    Modify actors or movies
+
+    (read:actors , read:movies, add:actor, change:actor, change:movie, delete:actor)
+
+Executive Producer:
+    All permissions a Casting Director has and…
+    Add or delete a movie from the database
+
+    (read:actors , read:movies, add:actor, change:actor, change:movie, delete:actor, add:movie, delete:movie)
+
+The tokens created for this roles can be found on the setup of:[`capstone-test-endpoints.postman_collection.json file`](.capstone-test-endpoints.postman_collection.json)
+
 
 ## Testing Endpoints
 
