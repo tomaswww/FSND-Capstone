@@ -16,7 +16,6 @@ def create_app(test_config=None):
 
     migrate = Migrate(app, db)
 
-
     # GET /actors and /movies --> DONE
     @app.route('/actors', methods=['GET'])
     @requires_auth(permission='read:actors')
@@ -24,15 +23,15 @@ def create_app(test_config=None):
         all_actors = actors.query.all()
         results = []
         for actor in all_actors:
-          one_actor = {}
-          one_actor["id"] = actor.id
-          one_actor["name"] = actor.name
-          one_actor["age"] = actor.age
-          one_actor["gender"] = actor.gender
-          results.append(one_actor)
+            one_actor = {}
+            one_actor["id"] = actor.id
+            one_actor["name"] = actor.name
+            one_actor["age"] = actor.age
+            one_actor["gender"] = actor.gender
+            results.append(one_actor)
         if not results:
-          abort(404)
-        return jsonify({"success":True,"Actors":results})
+            abort(404)
+        return jsonify({"success": True, "Actors": results})
 
     @app.route('/movies', methods=['GET'])
     @requires_auth(permission='read:movies')
@@ -40,62 +39,62 @@ def create_app(test_config=None):
         all_movies = movies.query.all()
         results = []
         for movie in all_movies:
-          one_movie = {}
-          one_movie["id"] = movie.id
-          one_movie["title"] = movie.title
-          one_movie["release_date"] = movie.release_date
-          results.append(one_movie)
+            one_movie = {}
+            one_movie["id"] = movie.id
+            one_movie["title"] = movie.title
+            one_movie["release_date"] = movie.release_date
+            results.append(one_movie)
         if not results:
-          abort(404)
-        return jsonify({"success": True, "Movies":results})
+            abort(404)
+        return jsonify({"success": True, "Movies": results})
 
     # DELETE / actors / and / movies/
     @app.route('/actors/<int:id>', methods=['DELETE'])
     @requires_auth(permission='delete:actor')
-    def delete_actor(payload,id):
+    def delete_actor(payload, id):
         actor = actors.query.get(id)
         if not actor:
-          abort(404)
+            abort(404)
         try:
-          actor.delete()
+            actor.delete()
         except Exception:
-          abort(401)
+            abort(401)
         return jsonify({"success": True, "Deleted": id})
 
     @app.route('/movies/<int:id>', methods=['DELETE'])
     @requires_auth(permission='delete:movie')
-    def delete_movie(payload,id):
+    def delete_movie(payload, id):
         movie = movies.query.get(id)
         if not movie:
-          abort(404)
+            abort(404)
         try:
-          movie.delete()
+            movie.delete()
         except Exception:
-          abort(401)
+            abort(401)
         return jsonify({"success": True, "Deleted": id})
-  
+
     # POST / actors and / movies and
     @app.route('/actors', methods=['POST'])
     @requires_auth(permission='add:actor')
     def post_actor(payload):
         data = request.get_json()
         if not data:
-          abort(400)
-        
+            abort(400)
+
         new_name = data.get("name")
         new_age = data.get("age")
         new_gender = data.get("gender")
 
         if not new_name or not new_age or not new_gender:
-          abort(400)
-        
+            abort(400)
+
         # Create a new actor
-        new_actor = actors(name=new_name,age=new_age,gender=new_gender)
+        new_actor = actors(name=new_name, age=new_age, gender=new_gender)
         try:
-          new_actor.insert()
+            new_actor.insert()
         except Exception:
-          abort(401)
-        
+            abort(401)
+
         # Query for new actor
         new_actor_id = new_actor.id
         new_actors = actors.query.get(new_actor_id)
@@ -112,17 +111,17 @@ def create_app(test_config=None):
     def post_movie(payload):
         data = request.get_json()
         if not data:
-          abort(400)
+            abort(400)
         new_title = data.get("title")
         new_release_date = data.get("release_date")
         if not new_title or not new_release_date:
-          abort(400)
+            abort(400)
         # Create a new movie
         new_movie = movies(title=new_title, release_date=new_release_date)
         try:
-          new_movie.insert()
+            new_movie.insert()
         except Exception:
-          abort(401)
+            abort(401)
         # Query for new actor
         new_movie_id = new_movie.id
         new_movies = movies.query.get(new_movie_id)
@@ -135,48 +134,48 @@ def create_app(test_config=None):
     # PATCH / actors / and / movies/
     @app.route('/actors/<int:id>', methods=['PATCH'])
     @requires_auth(permission='change:actor')
-    def patch_actor(payload,id):
+    def patch_actor(payload, id):
         # Get actor to patch
         new_actor = actors.query.get(id)
         if not new_actor:
-          abort(404)
+            abort(404)
         # Check what values are available to patch
         data = request.get_json()
         if 'name' in data:
-          new_actor.name = data.get("name")
+            new_actor.name = data.get("name")
         if 'age' in data:
-          new_actor.age = data.get("age")
+            new_actor.age = data.get("age")
         if 'gender' in data:
-          new_actor.gender = data.get("gender")
+            new_actor.gender = data.get("gender")
         try:
-          new_actor.update()
+            new_actor.update()
         except Exception:
-          abort(401)
+            abort(401)
         patched_actor = actors.query.get(new_actor.id)
         one_actor = {}
         one_actor["id"] = patched_actor.id
         one_actor["name"] = patched_actor.name
         one_actor["age"] = patched_actor.age
         one_actor["gender"] = patched_actor.gender
-        return jsonify({"success":True,"Actor":one_actor})
-    
+        return jsonify({"success": True, "Actor": one_actor})
+
     @app.route('/movies/<int:id>', methods=['PATCH'])
     @requires_auth(permission='change:movie')
-    def patch_movie(payload,id):
+    def patch_movie(payload, id):
         # Get actor to patch
         new_movie = movies.query.get(id)
         if not new_movie:
-          abort(404)
+            abort(404)
         # Check what values are available to patch
         data = request.get_json()
         if 'title' in data:
-          new_movie.title = data.get("title")
+            new_movie.title = data.get("title")
         if 'release_date' in data:
-          new_movie.release_date = data.get("release_date")
+            new_movie.release_date = data.get("release_date")
         try:
-          new_movie.update()
+            new_movie.update()
         except Exception:
-          abort(401)
+            abort(401)
         patched_movie = movies.query.get(new_movie.id)
         one_movie = {}
         one_movie["id"] = new_movie.id

@@ -29,8 +29,10 @@ def setup_db(app, database_path=database_path):
 Actors
 
 '''
+
+
 class actors(db.Model):
-    
+
     __tablename__ = 'actors'
 
     id = Column(Integer, primary_key=True)
@@ -50,7 +52,7 @@ class actors(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
-    
+
     '''
     insert()
         inserts a new model into a database
@@ -87,7 +89,6 @@ class movies(db.Model):
     def __init__(self, title, release_date):
         self.title = title
         self.release_date = release_date
-        
 
     '''delete()
     deletes a new model into a database
@@ -117,4 +118,3 @@ class movies(db.Model):
 
     def update(self):
         db.session.commit()
-    
