@@ -3,6 +3,7 @@ from flask import Flask, request, abort, jsonify, render_template, \
     Response, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from flask_migrate import Migrate
 import random
 from backend.models import setup_db, actors, movies
 from .auth.auth import AuthError, requires_auth
