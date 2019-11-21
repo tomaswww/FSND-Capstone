@@ -4,7 +4,7 @@ import json
 from flask_sqlalchemy import SQLAlchemy
 
 from flaskr import create_app
-from models import setup_db, actors, movies
+from backend.models import setup_db, actors, movies
 
 
 class CastingTestCase(unittest.TestCase):

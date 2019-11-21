@@ -4,7 +4,7 @@ from flask import Flask, request, abort, jsonify, render_template, \
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import random
-from models import setup_db, actors, movies
+from backend.models import setup_db, actors, movies
 from .auth.auth import AuthError, requires_auth
 
 
