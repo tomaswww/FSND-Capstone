@@ -104,4 +104,4 @@ python test_app.py;
 
 The app has been deployed succesfully to Heroku with latest changes
 
-URL: https://dashboard.heroku.com/apps/capstone-casting-app/
+URL: https://capstone-casting-app.herokuapp.com/
