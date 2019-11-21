@@ -18,7 +18,6 @@ def create_app(test_config=None):
     db = SQLAlchemy(app)
     migrate = Migrate(app, db) # this    
 
-
     # GET /actors and /movies --> DONE
     @app.route('/actors', methods=['GET'])
     @requires_auth(permission='read:actors')
