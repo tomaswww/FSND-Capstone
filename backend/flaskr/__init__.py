@@ -15,7 +15,7 @@ def create_app(test_config=None):
     setup_db(app)
     CORS(app)
 
-    migrate = Migrate(app, db)
+    # migrate = Migrate(app, db)
 
     # GET /actors and /movies --> DONE
     @app.route('/actors', methods=['GET'])
