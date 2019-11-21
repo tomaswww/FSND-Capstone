@@ -5,7 +5,7 @@ from backend.flaskr.__init__ import create_app
 from backend.models import setup_db
 
 app = create_app()
-db = setup_db()
+db = setup_db(app)
 migrate = Migrate(app, db)
 manager = Manager(app)
 
